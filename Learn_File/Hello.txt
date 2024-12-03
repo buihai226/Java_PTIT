@@ -1,0 +1,2 @@
+Thong tin trong file
+hello file

@@ -1,0 +1,272 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+### file nhị phân:
+DataInputStream dis = new DataInputStream(new FileInputStream("DATA.IN"));
+        Map<Integer, Integer> map = new TreeMap<>();
+        for (int i =1; i<= 100000; i++){
+            int k = dis.readInt();
+            map.put(k,map.getOrDefault(k, 0)+1);
+        }
+        for (Integer x: map.keySet()){
+            System.out.println(x+ " " + map.get(x));
+        }
+		
+		
+### list: ObjectInputStream ois = new ObjectInputStream(new FileInputStream("SONGUYEN.in"));
+        List<Integer> list = (List<Integer>) ois.readObject();
+
+### write binary:
+public class test {
+    public static void main(String[] arrgs) throws FileNotFoundException, IOException{
+        ArrayList<String> data = new ArrayList<>();
+        data.add("JAVA programming 5 has 371 pages");
+        data.add("More than 70%......");
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("DATA.in"))) {
+            oos.writeObject(data);
+        }
+        catch ( IOException e){
+            e.printStackTrace();
+        }
+    }
+}
+
+public class GhiFileNhiPhan {
+    public static void main(String[] args) {
+        String filePath = "data.bin";
+
+        try (DataOutputStream dos = new DataOutputStream(new FileOutputStream(filePath))) {
+            // Ghi các dữ liệu nhị phân
+            dos.writeInt(42);             // Ghi một số nguyên
+            dos.writeDouble(3.14);        // Ghi một số thực
+            dos.writeUTF("Xin chào");     // Ghi một chuỗi
+            dos.writeBoolean(true);       // Ghi một giá trị boolean
+
+            System.out.println("Dữ liệu đã được ghi vào file " + filePath);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    
+
+
+
+### Stack:
+package OOPs.VaoRaFile;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+import java.util.Stack;
+
+public class J07077 {
+    
+    public static long Calculate(long a, long b, Character c){
+        if(c == '+') return a + b;
+        if(c == '-') return a - b;
+        if(c == '*') return a * b;
+        return a / b;
+    }
+
+    public static int Priority(Character c){
+        if(c == '+' || c == '-')
+            return 1;
+        if(c == '*' || c == '/')
+            return 2;
+        return 0;
+    }
+
+    public static Long Infix(String s){
+        Stack<Character> ops = new Stack<>();
+        Stack<Long> val = new Stack<>();
+        s = "(" + s + ")";
+        int n = s.length();
+        for (int i = 0; i < n; i++) {
+            if (s.charAt(i) == '(')
+                ops.push(s.charAt(i));
+            else if (s.charAt(i) >= '0' && s.charAt(i) <= '9') {
+                long x = 0;
+                while (i < n  && (s.charAt(i) >= '0' && s.charAt(i) <= '9')) {
+                    x = (x * 10) + (s.charAt(i) - '0');
+                    ++i;
+                }
+                if (!(s.charAt(i) >= '0' && s.charAt(i) <= '9')) --i;
+                val.push(x);
+            }
+            else if (s.charAt(i) == ')') {
+                while (!ops.isEmpty() && ops.peek() != '(') {
+                    long x1 = val.peek(); val.pop();
+                    long x2 = val.peek(); val.pop();
+                    char y = ops.peek(); ops.pop();
+                    val.push(Calculate(x2, x1, y));
+                }
+                if (!ops.isEmpty())
+                    ops.pop();
+            }
+            else {
+                while (!ops.isEmpty() && Priority(ops.peek()) >= Priority(s.charAt(i))) {
+                    long x1 = val.peek(); val.pop();
+                    long x2 = val.peek(); val.pop();
+                    char y = ops.peek(); ops.pop();
+                    val.push(Calculate(x2, x1, y));
+                }
+                ops.push(s.charAt(i));
+            }
+        }
+        while (!ops.isEmpty()) {
+            long x1 = val.peek(); val.pop();
+            long x2 = val.peek(); val.pop();
+            char y = ops.peek(); ops.pop();
+            val.push(Calculate(x2, x1, y));
+        }
+        return val.peek();
+    }
+
+    public static void main(String [] args) throws FileNotFoundException{
+        Scanner sc = new Scanner (new File("BIEUTHUC.in"));
+        String x = sc.nextLine();
+        int t = Integer.valueOf(x);
+        x.isEmpty();
+        while(t-- > 0){
+            System.out.println(Infix(sc.nextLine()));
+        }
+        sc.close();
+    }
+}
+
+
+### Big integer:
+List<BigInteger> numbers = new ArrayList<>();
+        Scanner sc = new Scanner(new File("DAYSO.in"));
+        int n = Integer.parseInt(sc.nextLine());
+        while (n-- >0){
+            String so = sc.nextLine();
+            numbers.add(new BigInteger(so));
+        }
+        BigInteger min = numbers.get(0);
+        BigInteger max = numbers.get(0);
+        BigInteger sum = BigInteger.ZERO;
+        for (BigInteger number: numbers){
+            if (number.compareTo(min) < 0) min = number;
+            if (number.compareTo(max) > 0) max = number;
+            sum = sum.add(number);
+        }
+
+
+public MuaHang(String maKH, String tenKH, String diachi, SanPham sanPham, int soluongmua,String ngayMuastr) throws ParseException {
+        super(maKH, tenKH, diachi);
+        this.sanPham = sanPham;
+        this.soluongmua = soluongmua;
+        this.ngaymua = new SimpleDateFormat("dd/MM/yyyy").parse(ngayMuastr);
+        this.tongtien=soluongmua*sanPham.giaban;
+        this.ngayhethan = tinhngay();
+        
+    }
+    private Date tinhngay(){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(ngaymua);
+        calendar.add(Calendar.MONTH, sanPham.thoihanbaohanh);
+        return calendar.getTime();
+        
+    }
+	
+	
+### tính ngày:
+public MuaHang(String maKH, String tenKH, String diachi, SanPham sanPham, int soluongmua,String ngayMuastr) throws ParseException {
+        super(maKH, tenKH, diachi);
+        this.sanPham = sanPham;
+        this.soluongmua = soluongmua;
+        this.ngaymua = new SimpleDateFormat("dd/MM/yyyy").parse(ngayMuastr);
+        this.tongtien=soluongmua*sanPham.giaban;
+        this.ngayhethan = tinhngay();
+        
+    }
+    private Date tinhngay(){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(ngaymua);
+        calendar.add(Calendar.MONTH, sanPham.thoihanbaohanh);
+        return calendar.getTime();
+        
+    }
+
+    @Override
+    public String toString() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        return maKH + " "+ tenKH + " " + diachi + " " + sanPham.maSP+ " " + tongtien + " " + dateFormat.format(ngayhethan);
+    }
+
+### khoảng cách ngày:
+public class TinhKhoangCachNgay {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        SimpleDateFormat dateFormatter = new SimpleDateFormat("dd/MM/yyyy");
+
+        try {
+            // Nhập ngày đầu tiên
+            System.out.print("Nhập ngày đầu tiên (dd/MM/yyyy): ");
+            String ngayDauStr = scanner.nextLine();
+            Date ngayDau = dateFormatter.parse(ngayDauStr);
+
+            // Nhập ngày thứ hai
+            System.out.print("Nhập ngày thứ hai (dd/MM/yyyy): ");
+            String ngayHaiStr = scanner.nextLine();
+            Date ngayHai = dateFormatter.parse(ngayHaiStr);
+
+            // Tính khoảng cách (milliseconds -> days)
+            long milliseconds = Math.abs(ngayHai.getTime() - ngayDau.getTime());
+            long soNgay = milliseconds / (1000 * 60 * 60 * 24);
+
+            // Kết quả
+            System.out.println("Khoảng cách giữa hai ngày là: " + soNgay + " ngày");
+        } catch (ParseException e) {
+            System.out.println("Định dạng ngày không hợp lệ! Vui lòng nhập đúng định dạng dd/MM/yyyy.");
+        }
+    }
+}

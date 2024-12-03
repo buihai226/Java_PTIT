@@ -1,0 +1,47 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ */
+
+package com.mycompany.danh_sach_sinh_vien_3;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Scanner;
+
+/**
+ *
+ * @author Lenovo
+ */
+public class Danh_sach_sinh_vien_3 {
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        sc.nextLine();
+        ArrayList<SinhVien> ar = new ArrayList<>();
+        for(int i=0 ; i<n ; i++)
+        {
+            String name = sc.nextLine();
+            String lop = sc.nextLine();
+            String date = sc.nextLine();
+            double gpa = sc.nextDouble();
+            sc.nextLine();
+            SinhVien sv = new SinhVien(name,lop,date,gpa,i+1);
+            ar.add(sv);
+        }
+        Collections.sort(ar,new Comparator<SinhVien>()
+        {
+            @Override
+            public int compare(SinhVien o1, SinhVien o2) {
+                return Double.compare(o2.getGpa(), o1.getGpa());
+            }
+        });
+           
+        
+        for(SinhVien x : ar)
+        {
+            System.out.println(x.toString());
+        }
+    }
+}

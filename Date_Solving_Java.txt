@@ -1,0 +1,27 @@
+LocalDate start = LocalDate.of(year, month, day);
+LocalDate end = LocalDate.of(year, month, day);
+ int ans = (int)ChronoUnit.DAYS.between(start, end);
+
+
+public static String removeZero(double number) {
+        DecimalFormat format = new DecimalFormat("#.#");
+        return format.format(number);
+    }
+
+
+import java.io.FileWriter;
+import java.io.IOException;
+
+public class WriteToFileExample {
+    public static void main(String[] args) {
+        String filePath = "output.txt";
+        String content = "Xin chào, đây là nội dung ghi vào file!";
+
+        try (FileWriter writer = new FileWriter(filePath)) {
+            writer.write(content);
+            System.out.println("Ghi dữ liệu vào file thành công!");
+        } catch (IOException e) {
+            System.out.println("Có lỗi xảy ra: " + e.getMessage());
+        }
+    }
+}
